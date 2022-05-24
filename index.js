@@ -11,7 +11,8 @@ require("dotenv").config();
 //MONGO CONNECT
 
 const res = require("express/lib/response");
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.755op.mongodb.net/?retryWrites=true&w=majority`;
+const uri =
+  "mongodb+srv://dbuser1:89NuSGyMNpr6nn4o@cluster0.755op.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
