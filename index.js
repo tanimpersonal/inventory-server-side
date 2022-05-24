@@ -69,6 +69,7 @@ async function run() {
       const newProduct = req.body;
       const result = await productCollection.insertOne(newProduct);
       console.log(req.body);
+      res.send(result);
     });
   } finally {
     // await client.close();
