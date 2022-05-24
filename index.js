@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const cors = require("cors");
 const port = process.env.PORT || 5000;
@@ -32,6 +32,29 @@ async function run() {
       const cursor = productCollection.find(query);
       const products = await cursor.toArray();
       res.send(products);
+    });
+    //find one item according to id
+    app.get("/products/:id", async (req, res) => {
+      console.log(req.params);
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const product = await productCollection.findOne(query);
+      res.send(product);
+    });
+    //update quantity
+    app.put("/products/:id", async (req, res) => {
+      const id = req.params.id;
+      const quantity = req.body.quantity;
+      const filter = { _id: ObjectId(id) };
+      //   const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          quantity: quantity,
+        },
+      };
+      const updateResult = await productCollection.updateOne(filter, updateDoc);
+      res.send(updateResult);
+      console.log(updateResult);
     });
   } finally {
     // await client.close();
